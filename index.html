@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="蜜月行程">
+<meta name="robots" content="noindex, nofollow">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+</style>
+<title>歐洲蜜月 2027</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap">
+<style>
+/* Layout: a single-column travel companion — live "now" card first, bottom tab bar like an app.
+   Palette: stone paper + ink, wine (harvest season, romance) for "now", rail teal for transport. */
+:root{
+  --bg:#F3F4F1; --surface:#FFFFFF; --ink:#1D232C; --muted:#5D6572; --line:#DCDFE3;
+  --wine:#8A2C4B; --wine-soft:#F4E6EB; --rail:#2C6A6E; --rail-soft:#E3EFEF;
+  --good:#2F7D4F; --warn:#9A5F0E; --warn-soft:#FBF0DD; --on-accent:#FFFFFF;
+  --font-display:'Noto Serif TC','Songti TC','PMingLiU',serif;
+  --font-body:'Noto Sans TC','PingFang TC','Microsoft JhengHei',system-ui,sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121419; --surface:#1B1F27; --ink:#E7E9ED; --muted:#9AA2AE; --line:#2B303A;
+  --wine:#E07A9C; --wine-soft:#3A2230; --rail:#6CC0C3; --rail-soft:#1D3436;
+  --good:#6FCF97; --warn:#E3A94B; --warn-soft:#3A2E18; --on-accent:#16181E; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121419; --surface:#1B1F27; --ink:#E7E9ED; --muted:#9AA2AE; --line:#2B303A;
+  --wine:#E07A9C; --wine-soft:#3A2230; --rail:#6CC0C3; --rail-soft:#1D3436;
+  --good:#6FCF97; --warn:#E3A94B; --warn-soft:#3A2E18; --on-accent:#16181E; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 calc(88px + env(safe-area-inset-bottom,0px))}
+.app{max-width:720px;margin:0 auto}
+a{color:var(--rail)}
+h1,h2,h3{text-wrap:balance}
+.top{padding-block:18px 8px;display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between}
+.brand h1{font-family:var(--font-display);font-size:1.55rem;margin:0;letter-spacing:.03em;line-height:1.25}
+.brand p{margin:2px 0 0;color:var(--muted);font-size:.82rem}
+.clocks{display:flex;gap:8px}
+.clock{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:5px 10px}
+.clock .lbl{font-size:.68rem;color:var(--muted);letter-spacing:.08em}
+.clock .t{font-family:var(--font-mono);font-size:1.02rem;font-variant-numeric:tabular-nums;line-height:1.3}
+.simbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;background:var(--warn-soft);color:var(--warn);
+  border-radius:10px;padding:8px 12px;font-size:.85rem;margin-block:6px}
+section{margin-block:18px}
+h2{font-family:var(--font-display);font-size:1.15rem;margin:0 0 10px;letter-spacing:.02em}
+h3{font-size:1rem;margin:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.stack{display:flex;flex-direction:column;gap:12px}
+.eyebrow{font-size:.74rem;letter-spacing:.1em;color:var(--muted)}
+.now-title{font-family:var(--font-display);font-size:1.5rem;line-height:1.35;margin:4px 0 2px}
+.muted{color:var(--muted)}
+.small{font-size:.84rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;font-size:.72rem;padding:1px 8px;border-radius:999px;background:var(--rail-soft);color:var(--rail);font-weight:500;letter-spacing:.03em;white-space:nowrap}
+.chip.wine{background:var(--wine-soft);color:var(--wine)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.chip.plain{background:transparent;border:1px solid var(--line);color:var(--muted)}
+.btn{appearance:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 14px;border-radius:10px;
+  font:inherit;font-size:.9rem;font-weight:500;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn.primary{background:var(--wine);border-color:var(--wine);color:var(--on-accent)}
+.btn.small{padding:5px 10px;font-size:.8rem}
+.btn.danger{color:var(--wine);border-color:var(--wine)}
+.btn:disabled{opacity:.5;cursor:default}
+:is(a,button,input,select,summary):focus-visible{outline:2px solid var(--rail);outline-offset:2px}
+.btnrow{display:flex;flex-wrap:wrap;gap:8px}
+.next{border-top:1px dashed var(--line);margin-top:12px;padding-top:12px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--wine);margin-right:6px;vertical-align:middle;animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
+.timeline{list-style:none;margin:0;padding:0}
+.timeline li{display:grid;grid-template-columns:52px minmax(0,1fr);gap:12px;padding-block:10px;border-top:1px solid var(--line)}
+.timeline li:first-child{border-top:0}
+.timeline li.current{background:var(--wine-soft);border-radius:10px;padding-inline:8px;margin-inline:-8px;border-top-color:transparent}
+.timeline li.current + li{border-top-color:transparent}
+.timeline li.done .it-title{color:var(--muted)}
+.time{font-family:var(--font-mono);font-variant-numeric:tabular-nums;color:var(--muted);font-size:.88rem;padding-top:1px}
+.it-title{font-weight:600;line-height:1.45}
+.it-note{color:var(--muted);font-size:.84rem;margin-top:2px}
+.it-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px;font-size:.8rem}
+.day{margin-block:22px;scroll-margin-top:12px}
+.day-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
+.day-head .d{font-family:var(--font-mono);font-weight:600;font-variant-numeric:tabular-nums}
+.day-head .c{font-family:var(--font-display);font-size:1.1rem;font-weight:700}
+.day.today .card{border-color:var(--wine)}
+.list{display:flex;flex-direction:column;gap:10px}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.row > *{min-width:0}
+.num{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.big-num{font-family:var(--font-mono);font-size:1.9rem;font-variant-numeric:tabular-nums;line-height:1.2}
+.bar{height:7px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:4px}
+.bar i{display:block;height:100%;background:var(--wine)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:440px){.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+label{display:flex;flex-direction:column;gap:4px;font-size:.78rem;color:var(--muted);min-width:0}
+input,select,textarea{font:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%;min-width:0}
+.span2{grid-column:1 / -1}
+.exp{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;padding-block:10px;border-top:1px solid var(--line)}
+.exp:first-child{border-top:0}
+.exp .amt{text-align:right}
+details summary{cursor:pointer;font-weight:600}
+.notice{font-size:.84rem;border-radius:10px;padding:10px 12px;background:var(--rail-soft);color:var(--ink)}
+.notice.warn{background:var(--warn-soft)}
+.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);display:flex;justify-content:center;z-index:5;
+  padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(6px,env(safe-area-inset-left,0px));padding-right:max(6px,env(safe-area-inset-right,0px))}
+.tabs a{flex:1;max-width:130px;text-align:center;padding:9px 2px 10px;color:var(--muted);text-decoration:none;font-size:.74rem;display:flex;flex-direction:column;align-items:center;gap:2px}
+.tabs a[aria-current="page"]{color:var(--wine);font-weight:700}
+.tabs svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.leg{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;padding-block:12px;border-top:1px solid var(--line)}
+.leg:first-child{border-top:0}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:999px;font-size:.85rem;z-index:9}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <h1>歐洲蜜月 2027</h1>
+      <p>9/16 台北 → 維也納 · 布拉格 · 庫倫洛夫 · 鹽湖區 · 瑞士 · 巴黎 → 10/10</p>
+    </div>
+    <div class="clocks">
+      <div class="clock"><div class="lbl">歐洲時間</div><div class="t" id="clk-eu">--:--:--</div></div>
+      <div class="clock"><div class="lbl">台灣時間</div><div class="t" id="clk-tw">--:--</div></div>
+    </div>
+  </header>
+  <div id="simbar" hidden></div>
+  <main id="view"></main>
+</div>
+<div id="toast" class="toast" hidden></div>
+
+<nav class="tabs" aria-label="主選單">
+  <a href="#now" data-tab="now"><svg viewBox="0 0 24 24"><circle cx="12" cy="10" r="3"/><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/></svg>現在</a>
+  <a href="#plan" data-tab="plan"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>行程</a>
+  <a href="#stay" data-tab="stay"><svg viewBox="0 0 24 24"><path d="M3 18V8M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.6"/></svg>住宿</a>
+  <a href="#move" data-tab="move"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="14" rx="3"/><path d="M6 11h12M9 21l1.5-4M15 21l-1.5-4"/><circle cx="9.5" cy="14" r=".6"/><circle cx="14.5" cy="14" r=".6"/></svg>交通</a>
+  <a href="#money" data-tab="money"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M16 12.5h2M3 10h18"/></svg>花費</a>
+</nav>
+
+<script>
+/* ============ 行程資料（之後要改行程，改這裡就好） ============ */
+const COUNTRY={TW:{name:'台灣',cur:'TWD'},AT:{name:'奧地利',cur:'EUR'},CZ:{name:'捷克',cur:'CZK'},DE:{name:'德國',cur:'EUR'},CH:{name:'瑞士',cur:'CHF'},FR:{name:'法國',cur:'EUR'}};
+const MODE={flight:'飛機',car:'自駕',train:'火車',bus:'巴士',see:'景點',food:'用餐',stay:'住宿',event:'節慶',free:'自由'};
+const EU='Europe/Paris', TW='Asia/Taipei';
+// [時間, 標題, 類型, 緯度, 經度, 備註]
+const DAYS=[
+ {date:'2027-09-16',tz:TW,c:'TW',city:'台北',stay:null,items:[
+  ['20:30','前往桃園機場第二航廈','free',25.0777,121.2328,'長榮在第二航廈，商務艙可提早報到、使用貴賓室'],
+  ['23:30','BR61 起飛 → 維也納','flight',null,null,'起飛時間請以電子機票為準']]},
+ {date:'2027-09-17',tz:EU,c:'AT',city:'維也納',stay:'vienna',items:[
+  ['06:30','抵達維也納機場','flight',48.1103,16.5697,'搭CAT機場快線約16分，或S7約25分進市區'],
+  ['09:00','飯店寄放行李','stay',null,null,''],
+  ['10:00','環城大道、史蒂芬大教堂','see',48.2085,16.3731,'市中心步行即可'],
+  ['14:00','回飯店入住、補眠調時差','stay',null,null,''],
+  ['18:30','近郊新酒館喝當季 Sturm','food',48.2569,16.3533,'Grinzing 一帶，搭 U4 轉 38 號電車約30分']]},
+ {date:'2027-09-18',tz:EU,c:'AT',city:'維也納',stay:'vienna',items:[
+  ['09:00','美泉宮','see',48.1845,16.3122,'U4 Schönbrunn 站約20分，門票建議先預約'],
+  ['14:00','美景宮（克林姆《吻》）','see',48.1915,16.3809,'市中心搭電車 D 約15分'],
+  ['19:30','國家歌劇院或音樂會','event',48.2030,16.3690,'出發前查節目、預訂座位']]},
+ {date:'2027-09-19',tz:EU,c:'AT',city:'維也納',stay:'vienna',items:[
+  ['09:30','霍夫堡、西西博物館','see',48.2066,16.3655,''],
+  ['13:00','納許市場午餐','food',48.1985,16.3638,'週日市場攤位較少，以餐廳為主'],
+  ['16:00','普拉特公園／維也納啤酒節','event',48.2166,16.3959,'Kaiser Wiesn 通常9月中下旬開幕，出發前確認'],
+  ['20:00','準備明天自駕：駕照、租車文件','free',null,null,'台灣駕照正本＋國際駕照']]},
+ {date:'2027-09-20',tz:EU,c:'CZ',city:'自駕 第1天',stay:'telc',items:[
+  ['09:00','取車（維也納中央車站或機場）','car',48.1852,16.3762,'選自排車、告知要開往捷克、上網買捷克高速公路電子通行證'],
+  ['10:30','萊德尼采城堡','see',48.8000,16.8044,'開車約1小時15分；城堡旁有付費停車場；週一城堡內部可能休館，花園照常開放'],
+  ['14:00','米庫洛夫小鎮','see',48.8056,16.6378,'開車約20分；停城堡山下付費停車場'],
+  ['17:30','抵達泰爾奇、入住','stay',49.1842,15.4530,'開車約1小時40分；住有停車場的旅館'],
+  ['19:30','泰爾奇廣場夜景','see',49.1842,15.4530,'彩色房子廣場；開車的人不能喝酒']]},
+ {date:'2027-09-21',tz:EU,c:'CZ',city:'自駕 第2天',stay:'prague',items:[
+  ['09:00','泰爾奇廣場晨間散步','see',49.1842,15.4530,''],
+  ['11:30','庫特納霍拉人骨教堂','see',49.9620,15.2886,'開車約1小時45分；教堂旁有付費停車場'],
+  ['13:30','聖巴巴拉教堂','see',49.9447,15.2633,'開車約10分'],
+  ['16:00','布拉格機場還車','car',50.1008,14.2600,'開車約1小時15分；布拉格市區不要開車'],
+  ['17:30','進市區、入住布拉格','stay',null,null,'機場搭車約30分']]},
+ {date:'2027-09-22',tz:EU,c:'CZ',city:'布拉格',stay:'prague',items:[
+  ['09:00','舊城廣場、天文鐘','see',50.0875,14.4213,'整點有天文鐘報時'],
+  ['11:00','猶太區','see',50.0900,14.4183,'舊城廣場步行約5分'],
+  ['16:30','查理大橋','see',50.0865,14.4114,'傍晚光線最好，清晨人最少']]},
+ {date:'2027-09-23',tz:EU,c:'CZ',city:'布拉格',stay:'prague',items:[
+  ['09:00','布拉格城堡、聖維特大教堂、黃金巷','see',50.0911,14.4016,'搭電車22號上山比較輕鬆'],
+  ['14:00','小城區散步','see',50.0880,14.4040,''],
+  ['18:00','佩特任山看夕陽','see',50.0833,14.3950,'小城區搭纜車上山約5分']]},
+ {date:'2027-09-24',tz:EU,c:'CZ',city:'布拉格',stay:'prague',items:[
+  ['10:00','高堡','see',50.0645,14.4180,'地鐵C線約10分'],
+  ['15:00','伏爾塔瓦河遊船','see',50.0890,14.4150,''],
+  ['19:30','告別布拉格晚餐','food',null,null,'捷克啤酒＋摩拉維亞葡萄酒']]},
+ {date:'2027-09-25',tz:EU,c:'CZ',city:'庫倫洛夫',stay:'ck',items:[
+  ['09:00','巴士往庫倫洛夫','bus',50.0700,14.4040,'Na Knížecí 巴士站出發，約3小時，先上網訂票'],
+  ['12:30','抵達、入住','stay',48.8106,14.3150,''],
+  ['15:00','聖瓦茨拉夫慶典','event',48.8106,14.3150,'2026年是9/26～28，2027年日期出發前確認']]},
+ {date:'2027-09-26',tz:EU,c:'CZ',city:'庫倫洛夫',stay:'ck',items:[
+  ['10:00','庫倫洛夫城堡、斗篷橋','see',48.8127,14.3150,''],
+  ['14:00','城堡花園','see',48.8140,14.3100,''],
+  ['17:30','高處拍小鎮全景','see',48.8116,14.3152,'']]},
+ {date:'2027-09-27',tz:EU,c:'AT',city:'哈修塔特',stay:'hallstatt',items:[
+  ['09:00','門到門接駁小巴往哈修塔特','bus',null,null,'約3小時，需提前預約'],
+  ['12:30','抵達、入住','stay',47.5622,13.6493,'鎮內禁止外來車輛'],
+  ['14:30','鹽礦纜車、天空步道觀景台','see',47.5600,13.6390,''],
+  ['18:00','湖邊散步','see',47.5622,13.6493,'遊客散去後最安靜']]},
+ {date:'2027-09-28',tz:EU,c:'AT',city:'薩爾斯堡',stay:'salzburg',items:[
+  ['07:00','湖邊拍晨景','see',47.5622,13.6493,''],
+  ['10:00','前往薩爾斯堡','bus',null,null,'巴士／火車約2～2.5小時'],
+  ['14:00','米拉貝爾花園','see',47.8058,13.0418,''],
+  ['16:00','莫札特出生地、糧食胡同','see',47.8000,13.0433,'']]},
+ {date:'2027-09-29',tz:EU,c:'AT',city:'薩爾斯堡（二選一）',stay:'salzburg',items:[
+  ['08:30','選項A：慕尼黑啤酒節一日遊','event',48.1316,11.5498,'火車約1.5小時；2027年約9/18～10/3，白天較不擠'],
+  ['08:30','選項B：鹽湖區自駕（沃夫岡湖、沙夫山）','car',47.7392,13.4486,'薩爾斯堡取車、當天還車，沒有跨國費用'],
+  ['20:00','回薩爾斯堡','stay',null,null,'']]},
+ {date:'2027-09-30',tz:EU,c:'CH',city:'琉森',stay:'lucerne',items:[
+  ['09:00','火車：薩爾斯堡 → 蘇黎世 → 琉森','train',null,null,'約6小時，整天移動，帶點零食'],
+  ['15:30','抵達琉森、入住','stay',47.0502,8.3093,''],
+  ['17:30','卡貝爾橋、獅子紀念碑','see',47.0516,8.3075,'']]},
+ {date:'2027-10-01',tz:EU,c:'CH',city:'琉森',stay:'lucerne',items:[
+  ['08:30','皮拉圖斯山（船＋齒軌火車上山）','see',46.9790,8.2550,'中國國慶長假開始，搭早班'],
+  ['16:00','琉森湖畔、舊城','see',47.0510,8.3060,'']]},
+ {date:'2027-10-02',tz:EU,c:'CH',city:'格林德瓦',stay:'grindelwald',items:[
+  ['09:00','景觀列車：琉森 → 因特拉肯 → 格林德瓦','train',null,null,'約2.5小時'],
+  ['12:00','入住格林德瓦','stay',46.6242,8.0414,''],
+  ['13:30','菲斯特懸崖步道','see',46.6597,8.0547,'纜車約25分；當週查附近牛群下山活動']]},
+ {date:'2027-10-03',tz:EU,c:'CH',city:'格林德瓦',stay:'grindelwald',items:[
+  ['07:30','少女峰','see',46.5475,7.9853,'艾格快線＋齒軌火車，搭最早班'],
+  ['13:30','梅利申 → 小夏戴克全景步道','see',46.6127,7.9406,'步行約1.5小時']]},
+ {date:'2027-10-04',tz:EU,c:'CH',city:'策馬特',stay:'zermatt',items:[
+  ['09:00','火車往策馬特','train',null,null,'約3.5小時'],
+  ['13:00','入住策馬特','stay',46.0207,7.7491,''],
+  ['15:00','小鎮散步、拍馬特洪峰','see',46.0207,7.7491,'羅特洪峰纜車10月初可能已停駛']]},
+ {date:'2027-10-05',tz:EU,c:'FR',city:'策馬特 → 巴黎',stay:'paris',items:[
+  ['06:30','葛納葛特觀景火車看日出','see',45.9837,7.7851,'約33分上山；利菲爾湖倒影'],
+  ['12:00','火車經洛桑轉 TGV 往巴黎','train',null,null,'約7小時'],
+  ['19:30','抵達巴黎、入住','stay',48.8443,2.3744,'']]},
+ {date:'2027-10-06',tz:EU,c:'FR',city:'巴黎',stay:'paris',items:[
+  ['09:00','羅浮宮','see',48.8606,2.3376,'預約時段票'],
+  ['14:00','杜樂麗花園、塞納河','see',48.8635,2.3275,''],
+  ['16:00','聖母院','see',48.8530,2.3499,'']]},
+ {date:'2027-10-07',tz:EU,c:'FR',city:'巴黎',stay:'paris',items:[
+  ['09:00','凡爾賽宮一整天','see',48.8049,2.1204,'RER C 約45分～1小時，門票預約']]},
+ {date:'2027-10-08',tz:EU,c:'FR',city:'巴黎',stay:'paris',items:[
+  ['10:00','蒙馬特葡萄收穫節、聖心堂','event',48.8867,2.3431,'2026年是10/7～11，2027年日期出發前確認'],
+  ['15:00','奧賽美術館','see',48.8600,2.3266,'']]},
+ {date:'2027-10-09',tz:EU,c:'FR',city:'巴黎',stay:'paris',items:[
+  ['11:00','收穫節大遊行、美食市集','event',48.8867,2.3431,''],
+  ['19:00','艾菲爾鐵塔、塞納河晚餐遊船','food',48.8584,2.2945,'蜜月告別晚餐']]},
+ {date:'2027-10-10',tz:EU,c:'FR',city:'巴黎 → 台北',stay:null,items:[
+  ['07:30','出發往戴高樂機場','free',49.0097,2.5479,'RER B 或計程車約45分～1小時'],
+  ['11:20','BR88 起飛 → 台北','flight',null,null,'']]},
+ {date:'2027-10-11',tz:TW,c:'TW',city:'台北',stay:null,items:[
+  ['07:00','抵達桃園機場','flight',25.0777,121.2328,'國慶補假，回家好好休息']]}
+];
+const STAYS=[
+ {id:'vienna',city:'維也納',c:'AT',in:'2027-09-17',out:'2027-09-20',area:'內城一區或卡爾廣場附近（U1／U4沿線）',tip:'第一天清晨抵達，選可以提早寄放行李的飯店',q:'Vienna'},
+ {id:'telc',city:'泰爾奇',c:'CZ',in:'2027-09-20',out:'2027-09-21',area:'廣場周邊、附停車場的旅館',tip:'廣場車位少，訂房時確認停車',q:'Telč'},
+ {id:'prague',city:'布拉格',c:'CZ',in:'2027-09-21',out:'2027-09-25',area:'舊城或新城，靠近地鐵站',tip:'9/25要搭巴士，住 Na Knížecí 巴士站附近也方便',q:'Prague'},
+ {id:'ck',city:'庫倫洛夫',c:'CZ',in:'2027-09-25',out:'2027-09-27',area:'舊城內河畔民宿',tip:'慶典期間房間少，要早訂',q:'Český Krumlov'},
+ {id:'hallstatt',city:'哈修塔特',c:'AT',in:'2027-09-27',out:'2027-09-28',area:'鎮上湖景旅館',tip:'房間很少，越早訂越好',q:'Hallstatt'},
+ {id:'salzburg',city:'薩爾斯堡',c:'AT',in:'2027-09-28',out:'2027-09-30',area:'中央車站附近',tip:'方便慕尼黑一日遊和9/30搭火車',q:'Salzburg'},
+ {id:'lucerne',city:'琉森',c:'CH',in:'2027-09-30',out:'2027-10-02',area:'車站或湖畔',tip:'',q:'Lucerne'},
+ {id:'grindelwald',city:'格林德瓦',c:'CH',in:'2027-10-02',out:'2027-10-04',area:'車站附近，看得到艾格峰北壁的房間',tip:'',q:'Grindelwald'},
+ {id:'zermatt',city:'策馬特',c:'CH',in:'2027-10-04',out:'2027-10-05',area:'看得到馬特洪峰的房間',tip:'',q:'Zermatt'},
+ {id:'paris',city:'巴黎',c:'FR',in:'2027-10-05',out:'2027-10-10',area:'瑪黑區或羅浮宮周邊（地鐵1號線沿線）',tip:'時裝週＋收穫節期間房價高，要早訂',q:'Paris'}
+];
+const LEGS=[
+ {date:'2027-09-16',mode:'flight',from:'台北',to:'維也納',dur:'約13小時',info:'BR61 商務艙（已訂）',status:'done'},
+ {date:'2027-09-20',mode:'car',from:'維也納',to:'萊德尼采 → 米庫洛夫 → 泰爾奇',dur:'共約3小時15分',info:'自排車、跨境許可、捷克電子通行證',book:'出發前2～3個月比價訂車'},
+ {date:'2027-09-21',mode:'car',from:'泰爾奇',to:'庫特納霍拉 → 布拉格機場還車',dur:'共約3小時',info:'跨國還車費依租車公司而定'},
+ {date:'2027-09-25',mode:'bus',from:'布拉格',to:'庫倫洛夫',dur:'約3小時',info:'RegioJet 或 FlixBus',book:'出發前1個月',url:'https://regiojet.com'},
+ {date:'2027-09-27',mode:'bus',from:'庫倫洛夫',to:'哈修塔特',dur:'約3小時',info:'門到門接駁小巴，飯店接送',book:'出發前1～2個月預約'},
+ {date:'2027-09-28',mode:'train',from:'哈修塔特',to:'薩爾斯堡',dur:'約2～2.5小時',info:'巴士＋火車',url:'https://www.oebb.at'},
+ {date:'2027-09-30',mode:'train',from:'薩爾斯堡',to:'蘇黎世 → 琉森',dur:'約6小時',info:'ÖBB Railjet 到蘇黎世，再轉瑞士國鐵',book:'早鳥票約6個月前開賣',url:'https://www.oebb.at'},
+ {date:'2027-10-02',mode:'train',from:'琉森',to:'因特拉肯 → 格林德瓦',dur:'約2.5小時',info:'瑞士旅行通行證可搭',url:'https://www.sbb.ch'},
+ {date:'2027-10-04',mode:'train',from:'格林德瓦',to:'策馬特',dur:'約3.5小時',info:'瑞士旅行通行證可搭',url:'https://www.sbb.ch'},
+ {date:'2027-10-05',mode:'train',from:'策馬特',to:'洛桑 → 巴黎',dur:'約7小時',info:'TGV Lyria 不含在瑞士通行證內',book:'越早買越便宜',url:'https://www.tgv-lyria.com'},
+ {date:'2027-10-10',mode:'flight',from:'巴黎',to:'台北',dur:'11:20 → 隔天07:00',info:'BR88 商務艙（已訂）',status:'done'}
+];
+const EVENTS=[
+ {when:'9月中下旬起',name:'維也納啤酒節 Kaiser Wiesn',where:'維也納 普拉特公園',day:'2027-09-19'},
+ {when:'約 9/18～10/3',name:'慕尼黑啤酒節（順遊）',where:'從薩爾斯堡火車1.5小時',day:'2027-09-29'},
+ {when:'約 9/25～28',name:'聖瓦茨拉夫慶典',where:'庫倫洛夫',day:'2027-09-25'},
+ {when:'9月中～10月初週末',name:'牛群下山節 Alpabzug',where:'少女峰區附近山村',day:'2027-10-02'},
+ {when:'約 10/6～10',name:'蒙馬特葡萄收穫節',where:'巴黎 蒙馬特',day:'2027-10-08'}
+];
+const TRIP_START='2027-09-16', TRIP_END='2027-10-11';
+
+/* ============ 工具 ============ */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store={get(k,d){try{const v=localStorage.getItem('hm_'+k);return v?JSON.parse(v):d}catch(e){return d}},
+  set(k,v){try{localStorage.setItem('hm_'+k,JSON.stringify(v))}catch(e){}}};
+function partsIn(tz,d){const o={};new Intl.DateTimeFormat('en-CA',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}).formatToParts(d).forEach(p=>o[p.type]=p.value);
+  return {y:+o.year,mo:+o.month,d:+o.day,h:+o.hour%24,m:+o.minute,s:+o.second,date:`${o.year}-${o.month}-${o.day}`}}
+function zonedToUtc(date,time,tz){const [y,mo,d]=date.split('-').map(Number),[h,mi]=time.split(':').map(Number);const g=Date.UTC(y,mo-1,d,h,mi);const p=partsIn(tz,new Date(g));return g-(Date.UTC(p.y,p.mo-1,p.d,p.h,p.m)-g)}
+const WD='日一二三四五六';
+function fmtDate(s){const [y,m,d]=s.split('-').map(Number);const w=new Date(Date.UTC(y,m-1,d)).getUTCDay();return `${m}/${d}（${WD[w]}）`}
+const pad=n=>String(n).padStart(2,'0');
+function dur(ms){const m=Math.max(0,Math.round(ms/60000));if(m<60)return m+' 分';const h=Math.floor(m/60);if(h<48)return h+' 小時 '+(m%60)+' 分';return Math.floor(h/24)+' 天'}
+function mapLink(lat,lng,label){return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`}
+function navLink(lat,lng){const o=gps?`&origin=${gps.lat},${gps.lng}`:'';return `https://www.google.com/maps/dir/?api=1${o}&destination=${lat},${lng}&travelmode=transit`}
+function toast(t){const el=$('#toast');el.textContent=t;el.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>el.hidden=true,2200)}
+
+const ITEMS=[];DAYS.forEach((d,di)=>d.items.forEach((it,ii)=>ITEMS.push({di,ii,t:it[0],title:it[1],mode:it[2],lat:it[3],lng:it[4],note:it[5],ts:zonedToUtc(d.date,it[0],d.tz)})));
+
+/* ============ 時間（含預覽模式） ============ */
+let simOffset=null;try{const v=sessionStorage.getItem('hm_sim');if(v)simOffset=+v}catch(e){}
+const now=()=>Date.now()+(simOffset||0);
+function status(t=now()){
+  if(t<ITEMS[0].ts)return {phase:'pre'};
+  let i=-1;for(let k=0;k<ITEMS.length;k++)if(ITEMS[k].ts<=t)i=k;
+  const last=ITEMS[ITEMS.length-1];if(t>last.ts+12*3600e3)return {phase:'post'};
+  const cur=ITEMS[i];const same=ITEMS.filter(x=>x.ts===cur.ts&&x.di===cur.di);
+  const next=ITEMS.slice(i+1).find(x=>x.ts>cur.ts);
+  return {phase:'trip',cur,same,next,day:cur.di};
+}
+function tick(){const d=new Date(now());const e=partsIn(EU,d),w=partsIn(TW,d);
+  $('#clk-eu').textContent=`${pad(e.h)}:${pad(e.m)}:${pad(e.s)}`;$('#clk-tw').textContent=`${e.mo===w.mo&&e.d===w.d?'':w.mo+'/'+w.d+' '}${pad(w.h)}:${pad(w.m)}`}
+function renderSimbar(){const el=$('#simbar');if(simOffset==null){el.hidden=true;el.className='';return}
+  const p=partsIn(EU,new Date(now()));el.hidden=false;el.className='simbar';
+  el.innerHTML=`<span>預覽模式：顯示歐洲時間 ${p.mo}/${p.d} ${pad(p.h)}:${pad(p.m)} 的樣子</span><button class="btn small" id="sim-off">回到現在</button>`;
+  $('#sim-off').onclick=()=>setSim(null)}
+function setSim(local){ // local: 'YYYY-MM-DDTHH:MM' 歐洲時間
+  if(!local){simOffset=null;try{sessionStorage.removeItem('hm_sim')}catch(e){}}
+  else{const [d,t]=local.split('T');simOffset=zonedToUtc(d,t,EU)-Date.now();try{sessionStorage.setItem('hm_sim',String(simOffset))}catch(e){}}
+  renderSimbar();tick();render()}
+
+/* ============ GPS ============ */
+let gps=null,gpsMsg='';
+function haversine(a,b,c,d){const R=6371,r=x=>x*Math.PI/180;const dl=r(c-a),dn=r(d-b);const h=Math.sin(dl/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(dn/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
+function locate(){if(!navigator.geolocation){gpsMsg='這個瀏覽器不支援定位';render();return}
+  gpsMsg='定位中…';render();
+  navigator.geolocation.getCurrentPosition(p=>{gps={lat:p.coords.latitude,lng:p.coords.longitude,acc:p.coords.accuracy,at:Date.now()};gpsMsg='';render()},
+   err=>{gpsMsg=err.code===1?'沒有定位權限。請在瀏覽器設定允許這個網站使用位置，再按一次。':'暫時抓不到位置，請稍後再試。';render()},{enableHighAccuracy:true,timeout:15000,maximumAge:60000})}
+function gpsCard(st){
+  let body='';
+  if(gps){const pts=ITEMS.filter(x=>x.lat!=null);let best=null;pts.forEach(x=>{const dd=haversine(gps.lat,gps.lng,x.lat,x.lng);if(!best||dd<best.d)best={x,d:dd}});
+    const near=best&&best.d<1.5;
+    body+=`<p style="margin:0">${near?`你們在 <b>${esc(best.x.title)}</b> 附近（約 ${best.d<1?Math.round(best.d*1000)+' 公尺':best.d.toFixed(1)+' 公里'}）`:`離最近的行程地點 <b>${esc(best.x.title)}</b> 約 ${best.d.toFixed(best.d<10?1:0)} 公里`}</p>
+      <p class="small muted" style="margin:4px 0 0">座標 ${gps.lat.toFixed(4)}, ${gps.lng.toFixed(4)} · 精準度約 ${Math.round(gps.acc)} 公尺 · ${new Date(gps.at).toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'})} 更新</p>
+      <div class="btnrow" style="margin-top:10px"><a class="btn small" target="_blank" rel="noopener" href="${mapLink(gps.lat,gps.lng)}">在 Google 地圖看我的位置</a>
+      ${st&&st.next&&st.next.lat!=null?`<a class="btn small" target="_blank" rel="noopener" href="${navLink(st.next.lat,st.next.lng)}">導航到下一站</a>`:''}</div>`}
+  else body+=`<p class="small muted" style="margin:0">按下按鈕，用手機定位找出你們離哪個行程地點最近，並可直接開 Google 地圖導航。</p>`;
+  if(gpsMsg)body+=`<p class="notice warn" style="margin:10px 0 0">${esc(gpsMsg)}</p>`;
+  return `<section><div class="card"><div class="row"><h2 style="margin:0">我在哪裡</h2><button class="btn small primary" id="btn-gps">${gps?'重新定位':'定位我'}</button></div><div style="margin-top:10px">${body}</div></div></section>`}
+
+/* ============ 畫面：現在 ============ */
+function itemLinks(x){const l=[];if(x.lat!=null){l.push(`<a target="_blank" rel="noopener" href="${mapLink(x.lat,x.lng)}">地圖</a>`);l.push(`<a target="_blank" rel="noopener" href="${navLink(x.lat,x.lng)}">導航</a>`)}return l.length?`<div class="it-links">${l.join('')}</div>`:''}
+function timelineHTML(di,st){const d=DAYS[di];const t=now();
+  return `<ul class="timeline">${d.items.map((it,ii)=>{const x=ITEMS.find(z=>z.di===di&&z.ii===ii);
+   const isCur=st&&st.phase==='trip'&&st.same.includes(x);const done=!isCur&&x.ts<=t&&st&&st.phase!=='pre';
+   return `<li class="${isCur?'current':done?'done':''}"><div class="time">${it[0]}</div><div><div class="it-title">${isCur?'<span class="dot" aria-hidden="true"></span>':''}${esc(it[1])}</div>
+    <div class="chips" style="margin-top:3px"><span class="chip ${it[2]==='event'?'wine':''}">${MODE[it[2]]}</span></div>
+    ${it[5]?`<div class="it-note">${esc(it[5])}</div>`:''}${itemLinks(x)}</div></li>`}).join('')}</ul>`}
+function stayById(id){return STAYS.find(s=>s.id===id)}
+function renderNow(){const st=status();let h='';
+  if(st.phase==='pre'){const first=ITEMS[0];const days=Math.ceil((first.ts-now())/864e5);
+    h+=`<section><div class="card"><div class="eyebrow">出發倒數</div><div class="big-num" style="margin-top:4px">${days} <span style="font-size:1rem">天</span></div>
+     <p style="margin:6px 0 0">${fmtDate(TRIP_START)} 晚上搭 BR61 商務艙出發，${fmtDate('2027-09-17')} 清晨抵達維也納。</p>
+     <p class="small muted" style="margin:6px 0 0">出發後，這一頁會依照當地時間自動顯示「現在這個行程」和「下一站」。想先看看旅途中的樣子，可以用最下面的預覽。</p></div></section>`;
+    h+=`<section><h2>出發日</h2><div class="card">${timelineHTML(0,st)}</div></section>`}
+  else if(st.phase==='post'){h+=`<section><div class="card"><div class="eyebrow">旅程結束</div><div class="now-title">歡迎回家</div><p class="muted" style="margin:0">花費紀錄還在「花費」頁，可以整理一下這趟的總帳。</p></div></section>`}
+  else{const d=DAYS[st.day];const c=COUNTRY[d.c];const nth=st.day; const stay=d.stay&&stayById(d.stay);
+    h+=`<section><div class="card"><div class="eyebrow">${nth===0?'出發日':'第 '+nth+' 天'} · ${fmtDate(d.date)} · ${esc(d.city)} · ${c.name}</div>
+     <div class="eyebrow" style="margin-top:10px;color:var(--wine)"><span class="dot" aria-hidden="true"></span>現在</div>
+     ${st.same.map(x=>`<div class="now-title">${esc(x.title)}</div>${x.note?`<p class="muted small" style="margin:0 0 4px">${esc(x.note)}</p>`:''}${itemLinks(x)}`).join('')}
+     ${st.next?`<div class="next"><div class="eyebrow">下一站 · ${DAYS[st.next.di].date!==d.date?fmtDate(DAYS[st.next.di].date)+' ':''}${st.next.t} · 還有 ${dur(st.next.ts-now())}</div>
+       <div style="font-weight:600;margin-top:2px">${esc(st.next.title)}</div>${st.next.note?`<div class="it-note">${esc(st.next.note)}</div>`:''}${itemLinks(st.next)}</div>`:''}
+     </div></section>`;
+    if(stay)h+=`<section><div class="card"><div class="row"><div><div class="eyebrow">今晚住</div><div style="font-weight:600">${esc(stay.city)} · ${esc(stay.area)}</div></div><span class="chip warn">待訂</span></div></div></section>`;
+    h+=`<section><h2>今天的行程</h2><div class="card">${timelineHTML(st.day,st)}</div></section>`}
+  h+=gpsCard(st.phase==='trip'?st:null);
+  const p=partsIn(EU,new Date(now()));
+  h+=`<section><details class="card"><summary>預覽某個時間點</summary><p class="small muted">選一個歐洲時間，看看那個時候這一頁會顯示什麼。只影響你自己的畫面。</p>
+   <div class="btnrow"><input type="datetime-local" id="sim-input" min="2027-09-16T00:00" max="2027-10-11T12:00" value="${p.y}-${pad(p.mo)}-${pad(p.d)}T${pad(p.h)}:${pad(p.m)}" style="max-width:240px">
+   <button class="btn" id="sim-go">預覽</button>${simOffset!=null?'<button class="btn" id="sim-clear">回到現在</button>':''}</div>
+   <div class="btnrow" style="margin-top:8px">${[['2027-09-22T10:30','布拉格上午'],['2027-10-03T09:00','少女峰'],['2027-10-09T12:00','蒙馬特']].map(([v,l])=>`<button class="btn small" data-sim="${v}">${l}</button>`).join('')}</div></details></section>`;
+  $('#view').innerHTML=h;
+  $('#btn-gps').onclick=locate;
+  $('#sim-go').onclick=()=>{const v=$('#sim-input').value;if(v)setSim(v)};
+  const sc=$('#sim-clear');if(sc)sc.onclick=()=>setSim(null);
+  document.querySelectorAll('[data-sim]').forEach(b=>b.onclick=()=>setSim(b.dataset.sim));
+}
+
+/* ============ 畫面：行程 ============ */
+function renderPlan(){const st=status();const today=st.phase==='trip'?st.day:-1;
+  let h=`<section><h2>行程中的節慶</h2><div class="card"><div class="list">${EVENTS.map(e=>`<div class="row"><div><div style="font-weight:600">${esc(e.name)}</div><div class="small muted">${esc(e.where)}</div></div><div class="small num" style="text-align:right;white-space:nowrap">${esc(e.when)}</div></div>`).join('')}</div>
+   <p class="small muted" style="margin:10px 0 0">日期依2026年推估，出發前一個月再確認。</p></div></section>`;
+  if(today>=0)h+=`<div class="btnrow"><a class="btn small" href="#plan" id="go-today">跳到今天</a></div>`;
+  h+=DAYS.map((d,di)=>{const s=d.stay&&stayById(d.stay);return `<div class="day ${di===today?'today':''}" id="d-${d.date}">
+   <div class="day-head"><span class="d">${fmtDate(d.date)}</span><span class="c">${esc(d.city)}</span><span class="chip plain">${COUNTRY[d.c].name}</span>${di===today?'<span class="chip wine">今天</span>':''}</div>
+   <div class="card">${timelineHTML(di,st)}${s?`<div class="small muted" style="border-top:1px solid var(--line);margin-top:6px;padding-top:8px">住宿：${esc(s.city)} · ${esc(s.area)}</div>`:''}</div></div>`}).join('');
+  $('#view').innerHTML=h;
+  const g=$('#go-today');if(g)g.onclick=e=>{e.preventDefault();document.getElementById('d-'+DAYS[today].date).scrollIntoView({behavior:'smooth'})};
+}
+
+/* ============ 畫面：住宿 ============ */
+function nights(a,b){return Math.round((Date.parse(b)-Date.parse(a))/864e5)}
+function renderStay(){const total=STAYS.reduce((n,s)=>n+nights(s.in,s.out),0);
+  let h=`<section><h2>住宿（共 ${total} 晚）</h2><p class="small muted" style="margin:-4px 0 10px">都還沒訂。訂好之後把飯店名稱和地址告訴 Claude，就會更新到這裡。</p><div class="list">`;
+  h+=STAYS.map(s=>{const bk=`https://www.booking.com/searchresults.html?ss=${encodeURIComponent(s.q)}&checkin=${s.in}&checkout=${s.out}&group_adults=2&no_rooms=1`;
+   return `<div class="card"><div class="row"><div><div class="eyebrow">${fmtDate(s.in)} → ${fmtDate(s.out)} · ${nights(s.in,s.out)} 晚</div><h3 style="margin-top:2px">${esc(s.city)}</h3></div><span class="chip warn">待訂</span></div>
+    <p style="margin:6px 0 0">建議區域：${esc(s.area)}</p>${s.tip?`<p class="small muted" style="margin:2px 0 0">${esc(s.tip)}</p>`:''}
+    <div class="btnrow" style="margin-top:10px"><a class="btn small" target="_blank" rel="noopener" href="${bk}">在 Booking.com 查這幾晚</a></div></div>`}).join('');
+  $('#view').innerHTML=h+'</div></section>'}
+
+/* ============ 畫面：交通 ============ */
+function renderMove(){
+  let h=`<section><h2>主要移動</h2><div class="card">${LEGS.map(l=>`<div class="leg"><div><div class="num" style="font-weight:600">${fmtDate(l.date).replace(/（.）/,'')}</div><span class="chip ${l.mode==='flight'?'wine':''}">${MODE[l.mode]}</span></div>
+   <div><div style="font-weight:600">${esc(l.from)} → ${esc(l.to)}</div><div class="small">${esc(l.dur)} · ${esc(l.info)}</div>
+   ${l.book?`<div class="small muted">預訂：${esc(l.book)}</div>`:''}${l.status==='done'?'<div class="chips" style="margin-top:4px"><span class="chip">已訂</span></div>':''}
+   ${l.url?`<div class="it-links"><a target="_blank" rel="noopener" href="${l.url}">${esc(new URL(l.url).hostname.replace('www.',''))}</a></div>`:''}</div></div>`).join('')}</div></section>
+   <section><h2>瑞士旅行通行證</h2><div class="card"><p style="margin:0">9/30～10/5 剛好6天，買6日通行證。瑞士境內火車、遊船和大部分登山交通可搭或打折；薩爾斯堡到瑞士邊境、TGV 往巴黎不含在內。</p>
+   <div class="it-links" style="margin-top:8px"><a target="_blank" rel="noopener" href="https://www.sbb.ch">sbb.ch</a><a target="_blank" rel="noopener" href="https://www.jungfrau.ch">jungfrau.ch</a></div></div></section>
+   <section><h2>自駕提醒</h2><div class="card"><ul style="margin:0;padding-left:1.2em">
+   <li>台灣駕照正本＋國際駕照</li><li>租車指定自排，告知要開進捷克</li><li>捷克走高速公路要先上網買電子通行證</li>
+   <li>捷克酒駕零容忍，一滴都不能喝；全天要開大燈</li><li>布拉格市區不要開車，直接在機場還車</li></ul></div></section>`;
+  $('#view').innerHTML=h}
+
+/* ============ 花費 ============ */
+const CATS=['交通','住宿','餐飲','門票','購物','其他'];
+const CURS=['EUR','CZK','CHF','TWD'];
+let settings=Object.assign({url:'',key:'',names:['先生','太太'],rates:{EUR:37,CZK:1.5,CHF:40,TWD:1}},store.get('settings',{}));
+let exps=store.get('exps',[]);let syncState={busy:false,last:null,err:''};
+const saveExps=()=>store.set('exps',exps);
+const twd=e=>(+e.amount||0)*(+settings.rates[e.currency]||0);
+const money=n=>'NT$ '+Math.round(n).toLocaleString('en-US');
+async function api(payload){
+  if(!settings.url)throw new Error('尚未設定同步網址');
+  if(!payload){const r=await fetch(settings.url+(settings.url.includes('?')?'&':'?')+'action=list&key='+encodeURIComponent(settings.key));return r.json()}
+  const r=await fetch(settings.url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({key:settings.key},payload))});return r.json()}
+async function sync(quiet){
+  if(!settings.url||syncState.busy)return;syncState.busy=true;syncState.err='';if(!quiet&&location.hash==='#money')renderMoney();
+  try{
+    for(const e of exps.filter(x=>x.pending==='add')){const r=await api({action:'add',item:strip(e)});if(r.error)throw new Error(r.error);e.pending=null}
+    for(const e of exps.filter(x=>x.pending==='del')){const r=await api({action:'delete',id:e.id});if(r.error)throw new Error(r.error);e.gone=true}
+    const r=await api();if(r.error)throw new Error(r.error);
+    const local=exps.filter(x=>x.pending);exps=(r.items||[]).filter(x=>!local.some(l=>l.id===x.id)).concat(local.filter(x=>!x.gone));
+    saveExps();syncState.last=Date.now();
+  }catch(err){syncState.err=String(err.message||err)}
+  syncState.busy=false;if(location.hash==='#money')renderMoney()}
+const strip=e=>({id:e.id,date:e.date,amount:e.amount,currency:e.currency,category:e.category,payer:e.payer,note:e.note,created:e.created});
+function todayTrip(){const st=status();const d=st.phase==='trip'?DAYS[st.day]:null;return d}
+function renderMoney(){
+  const active=exps.filter(e=>e.pending!=='del');const total=active.reduce((n,e)=>n+twd(e),0);
+  const by=(k)=>{const m={};active.forEach(e=>{const key=k(e);m[key]=(m[key]||0)+twd(e)});return Object.entries(m).sort((a,b)=>b[1]-a[1])};
+  const d=todayTrip();const pTime=partsIn(d?d.tz:TW,new Date(now()));
+  const defDate=d?d.date:pTime.date;const defCur=d?COUNTRY[d.c].cur:'TWD';
+  const groups={};active.forEach(e=>(groups[e.date]=groups[e.date]||[]).push(e));
+  const dates=Object.keys(groups).sort().reverse();
+  const bars=(rows)=>rows.length?rows.map(([k,v])=>`<div><div class="row small"><span>${esc(k)}</span><span class="num">${money(v)}</span></div><div class="bar"><i style="width:${total?Math.max(2,v/total*100):0}%"></i></div></div>`).join(''):'<p class="small muted" style="margin:0">還沒有紀錄</p>';
+  const countryOf=e=>{const day=DAYS.find(x=>x.date===e.date);return day?COUNTRY[day.c].name:'出發前／其他'};
+  let syncLine;
+  if(!settings.url)syncLine=`<div class="notice warn">還沒連上 Google 試算表：花費目前只存在這支手機。設定好同步後，你和太太的紀錄會合在一起。</div>`;
+  else syncLine=`<div class="row small"><span class="muted">${syncState.busy?'同步中…':syncState.err?'同步失敗：'+esc(syncState.err):syncState.last?'已同步 '+new Date(syncState.last).toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}):'已設定同步'}${exps.some(x=>x.pending)?' · 有 '+exps.filter(x=>x.pending).length+' 筆等待上傳':''}</span><button class="btn small" id="btn-sync" ${syncState.busy?'disabled':''}>立即同步</button></div>`;
+  let h=`<section><div class="card"><div class="eyebrow">總花費（換算台幣）</div><div class="big-num" style="margin-top:2px">${money(total)}</div>
+   <div class="small muted">${active.length} 筆 · 匯率 EUR ${settings.rates.EUR} · CZK ${settings.rates.CZK} · CHF ${settings.rates.CHF}</div>
+   <div style="margin-top:12px">${syncLine}</div></div></section>
+  <section><h2>新增一筆</h2><form class="card" id="exp-form"><div class="grid3">
+   <label class="span2" style="grid-column:span 2">金額<input id="f-amount" inputmode="decimal" type="number" step="0.01" min="0" required placeholder="例如 24.5"></label>
+   <label>幣別<select id="f-cur">${CURS.map(c=>`<option ${c===defCur?'selected':''}>${c}</option>`).join('')}</select></label>
+   <label>類別<select id="f-cat">${CATS.map(c=>`<option>${c}</option>`).join('')}</select></label>
+   <label>誰付的<select id="f-payer">${settings.names.map(n=>`<option>${esc(n)}</option>`).join('')}<option>一起</option></select></label>
+   <label>日期<input type="date" id="f-date" value="${defDate}"></label>
+   <label class="span2">備註<input id="f-note" placeholder="例如 布拉格城堡門票" maxlength="80"></label></div>
+   <div class="btnrow" style="margin-top:12px"><button class="btn primary" type="submit">記一筆</button><span class="small muted" id="f-preview" style="align-self:center"></span></div></form></section>
+  <section><h2>分類</h2><div class="card stack">${bars(by(e=>e.category))}</div></section>
+  <section><div class="grid2"><div class="card stack"><h3>誰付的</h3>${bars(by(e=>e.payer))}</div><div class="card stack"><h3>各國</h3>${bars(by(countryOf))}</div></div></section>
+  <section><h2>明細</h2>${dates.length?dates.map(dt=>{const sum=groups[dt].reduce((n,e)=>n+twd(e),0);return `<div class="card" style="margin-bottom:10px"><div class="row"><b>${fmtDate(dt)}</b><span class="num small">${money(sum)}</span></div>
+    ${groups[dt].sort((a,b)=>b.created-a.created).map(e=>`<div class="exp"><div><div style="font-weight:600">${esc(e.note||e.category)}</div><div class="small muted">${esc(e.category)} · ${esc(e.payer)}${e.pending==='add'?' · 待上傳':''}</div></div>
+     <div class="amt"><div class="num">${(+e.amount).toLocaleString('en-US',{maximumFractionDigits:2})} ${esc(e.currency)}</div><div class="small muted num">${money(twd(e))}</div>
+     <button class="btn small" style="margin-top:4px" data-del="${esc(e.id)}">刪除</button></div></div>`).join('')}</div>`}).join(''):'<div class="card"><p class="muted" style="margin:0">還沒有花費紀錄。用上面的表單記第一筆，例如機場快線車票。</p></div>'}</section>
+  <section><details class="card" id="settings"><summary>設定：同步、名字、匯率</summary><div class="stack" style="margin-top:12px">
+   <label>Google 試算表同步網址（Apps Script 網址）<input id="s-url" value="${esc(settings.url)}" placeholder="https://script.google.com/macros/s/…/exec"></label>
+   <label>通關密語（和 Apps Script 裡設定的一樣）<input id="s-key" value="${esc(settings.key)}"></label>
+   <div class="grid2"><label>付款人 1<input id="s-n0" value="${esc(settings.names[0])}"></label><label>付款人 2<input id="s-n1" value="${esc(settings.names[1])}"></label></div>
+   <div class="grid3">${['EUR','CZK','CHF'].map(c=>`<label>1 ${c} = 台幣<input id="s-r-${c}" type="number" step="0.01" value="${settings.rates[c]}"></label>`).join('')}</div>
+   <div class="btnrow"><button class="btn primary" id="s-save">儲存設定</button><button class="btn" id="s-csv">複製全部明細（CSV）</button></div>
+   <p class="small muted" style="margin:0">匯率是換算用的參考值，改了會重新計算所有台幣金額。</p></div></details></section>`;
+  const open=$('#settings')&&$('#settings').open;
+  $('#view').innerHTML=h;if(open)$('#settings').open=true;
+  const prev=()=>{const a=+$('#f-amount').value,c=$('#f-cur').value;$('#f-preview').textContent=a?'約 '+money(a*(settings.rates[c]||0)):''};
+  $('#f-amount').oninput=prev;$('#f-cur').onchange=prev;
+  $('#exp-form').onsubmit=ev=>{ev.preventDefault();const a=+$('#f-amount').value;if(!a){toast('請輸入金額');return}
+    const e={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),date:$('#f-date').value||defDate,amount:a,currency:$('#f-cur').value,category:$('#f-cat').value,payer:$('#f-payer').value,note:$('#f-note').value.trim(),created:Date.now(),pending:'add'};
+    exps.push(e);saveExps();toast('已記下 '+money(twd(e)));renderMoney();sync(true)};
+  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
+    if(b.dataset.armed!=='1'){b.dataset.armed='1';b.textContent='確定刪除？';b.classList.add('danger');setTimeout(()=>{if(b.isConnected){b.dataset.armed='';b.textContent='刪除';b.classList.remove('danger')}},3000);return}
+    const e=exps.find(x=>x.id===b.dataset.del);if(!e)return;
+    if(e.pending==='add')exps=exps.filter(x=>x!==e);else e.pending='del';
+    saveExps();renderMoney();sync(true)});
+  const bs=$('#btn-sync');if(bs)bs.onclick=()=>sync();
+  $('#s-save').onclick=()=>{settings.url=$('#s-url').value.trim();settings.key=$('#s-key').value.trim();settings.names=[$('#s-n0').value.trim()||'先生',$('#s-n1').value.trim()||'太太'];
+    ['EUR','CZK','CHF'].forEach(c=>{const v=+$('#s-r-'+c).value;if(v>0)settings.rates[c]=v});store.set('settings',settings);toast('設定已儲存');renderMoney();sync()};
+  $('#s-csv').onclick=()=>{const rows=[['日期','金額','幣別','台幣','類別','付款人','備註']].concat(active.map(e=>[e.date,e.amount,e.currency,Math.round(twd(e)),e.category,e.payer,e.note]));
+    const csv=rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+    navigator.clipboard.writeText(csv).then(()=>toast('已複製，可貼到試算表'),()=>toast('無法複製，請改用 Google 試算表查看'))};
+}
+
+/* ============ 路由 ============ */
+const VIEWS={now:renderNow,plan:renderPlan,stay:renderStay,move:renderMove,money:renderMoney};
+function render(){const k=(location.hash||'#now').slice(1);const v=VIEWS[k]?k:'now';
+  document.querySelectorAll('.tabs a').forEach(a=>a.setAttribute('aria-current',a.dataset.tab===v?'page':'false'));VIEWS[v]()}
+window.addEventListener('hashchange',()=>{render();window.scrollTo(0,0)});
+renderSimbar();tick();render();sync(true);
+setInterval(tick,1000);
+setInterval(()=>{const k=(location.hash||'#now').slice(1);if(k==='now'||k===''){if(!document.activeElement||document.activeElement===document.body)renderNow()}},30000);
+setInterval(()=>{if(location.hash==='#money'&&document.visibilityState==='visible')sync(true)},60000);
+</script>
+
+</body>
+</html>
